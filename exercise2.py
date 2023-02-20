@@ -20,21 +20,40 @@ class Category:
             self.name = name
             self.code = code
             self.no_of_products = no_of_products
-            self.parent=0
-            self.products=0
-            self.display_name=0
+            self.products = []
+            self.display_name = None
 
         def show_category(self):
-            print("name ", self.name)
-            print("code", self.code)
-            print("no_of_products", self.no_of_products)
-            print("parent",self.parent)
-            print("products",self.products)
-            print("display_name:",self.display_name)
+            print("name: ", self.name)
+            print("code:", self.code)
+            print("no_of_products:", self.no_of_products)
+            print("products:",self.products)
+            print("display_name:",self.generate_display_name)
 
-        def display_name(Category):
+        def show_name(self):
+            print("name: ", self.name)
+            print("products:", self.products)
 
-            pass
+
+        def generate_display_name(c_list):
+            for i in range(len(c_list)):
+                for j in range(i + 1, len(c_list)):
+                    if c_list[i].name ==c_list[i].name:
+                        print(i.name)
+                    else:
+                        print(i.name>j.name)
+                        continue
+
+
+
+
+        def sort_category(c_list):
+            for i in range(len(c_list)):
+                for j in range(i + 1, len(c_list)):
+                    if c_list[i].name > c_list[j].name:
+                        c_list[i], c_list[j] = c_list[j], c_list[i]
+            for i in c_list:
+                i.show_name()
 
 class Products(Category):
 
@@ -43,13 +62,15 @@ class Products(Category):
             self.code = code
             self.category = category
             category.no_of_products += 1
+            category.products.append(self)
             self.price = price
 
         def show_products(self):
             print("name: ", self.name, ','"code:", self.code, ','"category:", self.category.name, ','"price:",
                   self.price)
 
-
+        def __repr__(self):
+            return ( '{'+ "product:-"+ "name:" + self.name +  '|'+  "price:"+ str(self.price)+ '|'+  "code:" + str(self.code)+ '|'+"category:" + self.category.name +'}')
 
 #5 diffrent category:
 
@@ -80,9 +101,6 @@ p14 = Products("hdfc", 214, c5, 300)
 p15 = Products("sbi", 215, c5, 500)
 
 
-
-p_list=[p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15]
-
 print(".......show category.........")
 c1.show_category()
 c2.show_category()
@@ -90,8 +108,5 @@ c3.show_category()
 c4.show_category()
 c5.show_category()
 
-print(".......show products.......:")
-for rec in p_list:
-    rec.show_products()
-
-Category.display_name(Category)
+print("...........showsortcategory..............")
+Category.sort_category(c_list)
