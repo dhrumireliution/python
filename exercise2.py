@@ -16,34 +16,34 @@ category.
 class Category:
 
 
-        def __init__(self, name, code, no_of_products):
+        def __init__(self, name, code, no_of_products,parent=None):
             self.name = name
             self.code = code
             self.no_of_products = no_of_products
+            self.parent=parent
             self.products = []
-            self.display_name = None
+            self.generate_display_name(i,j)
 
         def show_category(self):
             print("name: ", self.name)
             print("code:", self.code)
             print("no_of_products:", self.no_of_products)
             print("products:",self.products)
-            print("display_name:",self.generate_display_name)
+            print("display_name:",self.generate_display_name(i,j))
 
         def show_name(self):
             print("name: ", self.name)
             print("products:", self.products)
 
 
-        def generate_display_name(c_list):
-            for i in range(len(c_list)):
-                for j in range(i + 1, len(c_list)):
-                    if c_list[i].name ==c_list[i].name:
-                        print(i.name)
-                    else:
-                        print(i.name>j.name)
-                        continue
+        def generate_display_name(self,i,j):
 
+                if i.parent == None:
+                    return j
+
+                else:
+                    j=i.parent.name +">"+j.name
+                    return self.generate_display_name(i.parent,j)
 
 
 
@@ -70,15 +70,15 @@ class Products(Category):
                   self.price)
 
         def __repr__(self):
-            return ( '{'+ "product:-"+ "name:" + self.name +  '|'+  "price:"+ str(self.price)+ '|'+  "code:" + str(self.code)+ '|'+"category:" + self.category.name +'}')
+            return ('{'+ "product:-"+ "name:" + self.name +  '|'+  "price:"+ str(self.price)+ '|'+  "code:" + str(self.code)+ '|'+"category:" + self.category.name +'}')
 
 #5 diffrent category:
 
 c1 = Category("vehicle",101,0)
-c2 = Category("car",102,0)
-c3 = Category("petrol",103,0)
-c4 = Category("creditcard",104,0)
-c5 = Category("bank",105,0)
+c2 = Category("car",102,0,c1.name)
+c3 = Category("petrol",103,0,c2.name)
+c4 = Category("creditcard",104,0,c3.name)
+c5 = Category("bank",105,0,c4.name)
 
 c_list=[c1,c2,c3,c4,c5]
 
