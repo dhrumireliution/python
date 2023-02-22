@@ -22,28 +22,33 @@ class Category:
             self.no_of_products = no_of_products
             self.parent=parent
             self.products = []
-            self.generate_display_name(i,j)
+            self.display_name=self.generate_display_name()
 
         def show_category(self):
             print("name: ", self.name)
             print("code:", self.code)
             print("no_of_products:", self.no_of_products)
-            print("products:",self.products)
-            print("display_name:",self.generate_display_name(i,j))
+            for x in self.products:
+                print(x)
+            print("display_name:",self.display_name)
+
+            print()
 
         def show_name(self):
             print("name: ", self.name)
-            print("products:", self.products)
+            for x in self.products:
+                print(x)
+            print()
+
+        def generate_display_name(self):
 
 
-        def generate_display_name(self,i,j):
+             if self.parent==None:
+                 return self.name
+             # else:
+             #   Category.generate_display_name(self)
+             #    return self.parent+'>'+self.name
 
-                if i.parent == None:
-                    return j
-
-                else:
-                    j=i.parent.name +">"+j.name
-                    return self.generate_display_name(i.parent,j)
 
 
 
@@ -70,7 +75,9 @@ class Products(Category):
                   self.price)
 
         def __repr__(self):
-            return ('{'+ "product:-"+ "name:" + self.name +  '|'+  "price:"+ str(self.price)+ '|'+  "code:" + str(self.code)+ '|'+"category:" + self.category.name +'}')
+            return ( "product:-"+ "name:" + self.name +  '|'+  "price:"+ str(self.price)+ '|'+  "code:" + str(self.code)+ '|'+"category:" + self.category.name )
+
+
 
 #5 diffrent category:
 
@@ -110,3 +117,5 @@ c5.show_category()
 
 print("...........showsortcategory..............")
 Category.sort_category(c_list)
+
+
