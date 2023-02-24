@@ -19,10 +19,28 @@ class Location:
     def __init__(self, name, code):
         self.name = name
         self.code = code
+        self.product = []
 
     def show_location(self):
         print("name:", self.name)
         print("code:", self.code)
+        for x in self.product:
+            print(x)
+
+    def show_name(self):
+        print("name: ", self.name)
+        for x in self.product:
+            print(x)
+        print()
+
+    @staticmethod
+    def sort_location(l_list):
+        for i in range(len(l_list)):
+            for j in range(i + 1, len(l_list)):
+                if l_list[i].name > l_list[j].name:
+                    l_list[i], l_list[j] = l_list[j], l_list[i]
+        for i in l_list:
+            i.show_name()
 
 
 class Movement:
@@ -30,32 +48,46 @@ class Movement:
     def __init__(self, from_location, to_location, product, quantity):
         self.from_location = from_location
         self.to_location = to_location
-        self.product = self.movements_by_product()
         self.quantity = quantity
+        self.product = product
+        product.stock_at_locations.update({self.from_location.name: str(self.quantity)})
 
     def show_movement(self):
         print("from_location:", self.from_location.name)
         print("to_location:", self.to_location.name)
-        print("product:", self.product)
+        print("product:", self.product.name)
         print("quantity:", self.quantity)
         print()
 
     @staticmethod
-    def movements_by_product(self):
-       pass
+    def movements_by_product(product):
+
+        for i in m_list:
+            if i.product == product:
+                i.show_movement()
 
 
 class Product:
 
-    def __init__(self, name, code, price):
+    def __init__(self, name, code, price, location):
         self.name = name
         self.code = code
         self.price = price
         self.stock_at_locations = {}
+        self.location = location
+        location.product.append(self)
 
     def show_products(self):
         print("name: ", self.name, ','"code:", ','"price:", self.price, ','"stock_at_locations:",
+
               self.stock_at_locations)
+
+    def stock(self):
+        pass
+
+    def __repr__(self):
+        return ("product:-" + "name:" + self.name + '|' + "price:" + str(self.price) + '|' + "code:" + str(
+            self.code) + '|' + "stock_at_locations:" + str(self.stock_at_locations))
 
 
 # location object:
@@ -64,22 +96,40 @@ l2 = Location("rajkot", 102)
 l3 = Location("surat", 103)
 l4 = Location("baroda", 104)
 
+l_list = [l1, l2, l3, l4]
+
 # product object:
-p1 = Product("car", 201, 200)
-p2 = Product("cloths", 203, 500)
-p3 = Product("watch", 204, 300)
-p4 = Product("shoes", 205, 400)
-p5 = Product("tv", 206, 150)
+p1 = Product("car", 201, 200, l1)
+p2 = Product("cloths", 203, 500, l4)
+p3 = Product("watch", 204, 300, l2)
+p4 = Product("shoes", 205, 400, l3)
+p5 = Product("tv", 206, 150, l4)
+
+p_list = [p1, p2, p3, p4, p5]
 
 # movement object:
-m1 = Movement(l1, l3, p1, 300)
-m2 = Movement(l4, l2, p2, 450)
-m3 = Movement(l2, l1, p3, 600)
-m4 = Movement(l3, l2, p4, 600)
-m5 = Movement(l4, l1, p5, 600)
+m1 = Movement(l1, l3, p1, 30)
+m2 = Movement(l4, l2, p2, 45)
+m3 = Movement(l2, l1, p3, 20)
+m4 = Movement(l3, l2, p4, 56)
+m5 = Movement(l4, l1, p5, 40)
 
-m1.show_movement()
-m2.show_movement()
-m3.show_movement()
-m4.show_movement()
-m5.show_movement()
+
+m_list = [m1, m2, m3, m4, m5]
+
+# movements_by_product:
+print("............movements_by_product............")
+Movement.movements_by_product(p1)
+Movement.movements_by_product(p2)
+Movement.movements_by_product(p3)
+Movement.movements_by_product(p4)
+Movement.movements_by_product(p5)
+
+
+print(".............showproduct............")
+for rec in p_list:
+    rec.show_products()
+print()
+
+print("...........showsortlocation..............")
+Location.sort_location(l_list)
