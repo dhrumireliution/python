@@ -33,6 +33,9 @@ class Location:
             print(x)
         print()
 
+    def __repr__(self):
+        return self.name
+
     @staticmethod
     def sort_location(l_list):
         for i in range(len(l_list)):
@@ -55,7 +58,7 @@ class Movement:
         self.generate_closing_stock()
         # product.total_stock.update({self.from_location.name : str(self.stock)})
         product.stock_at_locations.update({self.to_location.name: str(self.quantity)})
-        # product.stock_at_locations.update({self.from_location.name: str(self.generate_closing_stock())})
+        product.stock_at_locations.update({self.from_location.name: str(self.generate_closing_stock())})
 
     def show_movement(self):
         print("from_location:", self.from_location.name)
@@ -66,7 +69,15 @@ class Movement:
 
     def generate_closing_stock(self):
 
-        pass
+        for i, j in self.product.stock_at_locations.items():
+            try:
+                if self.quantity <= j:
+                    return j - self.quantity
+            except:
+               return " sorry,out of stock"
+
+
+
 
     @staticmethod
     def movements_by_product(product):
@@ -91,13 +102,9 @@ class Product:
 
               self.stock_at_locations)
 
-    def stock(self, location, ):
-        pass
-
-
     def __repr__(self):
-        return ("product:-" + "name:" + self.name + '|' + "price:" + str(self.price) + '|' + "code:" + str(
-            self.code) + '|' + "stock_at_locations:" + str(self.stock_at_locations))
+        return ("product:-" + "name:" + self.name + '|' + "code:" + str(
+            self.code) + '|' + "price:" + str(self.price) + '|' + "stock_at_locations:" + str(self.stock_at_locations))
 
 
 # location object:
@@ -109,11 +116,11 @@ l4 = Location("baroda", 104)
 l_list = [l1, l2, l3, l4]
 
 # product object:
-p1 = Product("car", 201, 200, {l1.name: 40}, l1)
-p2 = Product("cloths", 203, 500, {l4.name: 35}, l4)
-p3 = Product("watch", 204, 300, {l2.name: 25}, l2)
-p4 = Product("shoes", 205, 400, {l3.name: 60}, l3)
-p5 = Product("tv", 206, 150, {l4.name: 45}, l4)
+p1 = Product("car", 201, 200, {l1: 40}, l1)
+p2 = Product("cloths", 203, 500, {l4: 35}, l4)
+p3 = Product("watch", 204, 300, {l2: 25}, l2)
+p4 = Product("shoes", 205, 400, {l3: 60}, l3)
+p5 = Product("tv", 206, 150, {l4: 45}, l4)
 
 p_list = [p1, p2, p3, p4, p5]
 
