@@ -40,15 +40,15 @@ class Category:
             print(x)
         print()
 
-            #recursion logic:
+        # recursion logic:
 
     def generate_display_name(self):
         if self.parent is None:
             return self.name
         else:
-           return str(self.parent.generate_display_name()) + ' > ' + str(self.name)
+            return str(self.parent.generate_display_name()) + ' > ' + str(self.name)
 
-            #order by category:
+            # order by category:
 
     def sort_category(c_list):
         for i in range(len(c_list)):
@@ -73,7 +73,7 @@ class Products(Category):
         print("name: ", self.name, ','"code:", self.code, ','"category:", self.category.name, ','"price:",
               self.price)
 
-            #show object attribute :
+        # show object attribute :
 
     def __repr__(self):
         return ("product:-" + "name:" + self.name + '|' + "price:" + str(self.price) + '|' + "code:" + str(
