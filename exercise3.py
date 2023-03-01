@@ -37,12 +37,12 @@ class Location:
         return self.name
 
     @staticmethod
-    def sort_location(l_list):
-        for i in range(len(l_list)):
-            for j in range(i + 1, len(l_list)):
-                if l_list[i].name > l_list[j].name:
-                    l_list[i], l_list[j] = l_list[j], l_list[i]
-        for i in l_list:
+    def sort_location(loc_list):
+        for i in range(len(loc_list)):
+            for j in range(i + 1, len(loc_list)):
+                if loc_list[i].name > loc_list[j].name:
+                    loc_list[i], loc_list[j] = loc_list[j], loc_list[i]
+        for i in loc_list:
             i.show_name()
 
 
@@ -52,11 +52,9 @@ class Movement:
         self.from_location = from_location
         self.to_location = to_location
         self.quantity = quantity
-        # self.generate_closing_stock()
-
         self.product = product
         self.generate_closing_stock()
-        # product.total_stock.update({self.from_location.name : str(self.stock)})
+
         product.stock_at_locations.update({self.to_location.name: str(self.quantity)})
         product.stock_at_locations.update({self.from_location.name: str(self.generate_closing_stock())})
 
@@ -74,15 +72,14 @@ class Movement:
                 if self.quantity <= j:
                     return j - self.quantity
             except:
-               return " sorry,out of stock"
-
+                return "sorry,out of stock"
 
 
 
     @staticmethod
     def movements_by_product(product):
 
-        for i in m_list:
+        for i in mov_list:
             if i.product == product:
                 i.show_movement()
 
@@ -108,30 +105,30 @@ class Product:
 
 
 # location object:
-l1 = Location("ahmedabad", 101)
-l2 = Location("rajkot", 102)
-l3 = Location("surat", 103)
-l4 = Location("baroda", 104)
+ahmedabad = Location("ahmedabad", 101)
+rajkot = Location("rajkot", 102)
+surat = Location("surat", 103)
+baroda = Location("baroda", 104)
 
-l_list = [l1, l2, l3, l4]
+loc_list = [ahmedabad, rajkot, surat, baroda]
 
 # product object:
-p1 = Product("car", 201, 200, {l1: 40}, l1)
-p2 = Product("cloths", 203, 500, {l4: 35}, l4)
-p3 = Product("watch", 204, 300, {l2: 25}, l2)
-p4 = Product("shoes", 205, 400, {l3: 60}, l3)
-p5 = Product("tv", 206, 150, {l4: 45}, l4)
+p1 = Product("car", 201, 200, {ahmedabad: 40}, ahmedabad)
+p2 = Product("cloths", 203, 500, {baroda: 35}, baroda)
+p3 = Product("watch", 204, 300, {rajkot: 25}, rajkot)
+p4 = Product("shoes", 205, 400, {surat: 60}, surat)
+p5 = Product("tv", 206, 150, {baroda: 45}, baroda)
 
 p_list = [p1, p2, p3, p4, p5]
 
 # movement object:
-m1 = Movement(l1, l3, 30, p1)
-m2 = Movement(l4, l2, 40, p2)
-m3 = Movement(l2, l1, 20, p3)
-m4 = Movement(l3, l2, 56, p4)
-m5 = Movement(l4, l1, 40, p5)
+m1 = Movement(ahmedabad, surat, 30, p1)
+m2 = Movement(baroda, rajkot, 40, p2)
+m3 = Movement(rajkot, ahmedabad, 20, p3)
+m4 = Movement(surat, rajkot, 56, p4)
+m5 = Movement(baroda, ahmedabad, 40, p5)
 
-m_list = [m1, m2, m3, m4, m5]
+mov_list = [m1, m2, m3, m4, m5]
 
 # movements_by_product:
 print("............movements_by_product............")
@@ -147,4 +144,4 @@ for rec in p_list:
 print()
 
 print("...........translocation..............")
-Location.sort_location(l_list)
+Location.sort_location(loc_list)
